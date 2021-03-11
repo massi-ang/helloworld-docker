@@ -1,0 +1,31 @@
+---
+RecipeFormatVersion: 2020-01-25
+ComponentName: com.example.HelloWorldDocker
+ComponentVersion: VERSION
+ComponentDescription: My first AWS IoT Greengrass component.
+ComponentPublisher: Amazon
+ComponentDependencies:
+  aws.greengrass.TokenExchangeService:
+    VersionRequirement: ">=0.0.0"
+    DependencyType: HARD
+ComponentConfiguration:
+  DefaultConfiguration:
+    Message: world
+    accessControl:
+      aws.greengrass.ipc.mqttproxy:
+        "com.example.ecr:all":
+          policyDescription: Allows access to publish to test/topic.
+          operations:
+            - "*"
+          resources:
+            - "*"
+Manifests:
+  - Platform:
+      os: linux
+    
+    Lifecycle:
+      Run: 
+        script: |-
+          eval $(aws ecr get-login --no-include-email)
+          docker run --rm IMAGE
+      

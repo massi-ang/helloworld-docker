@@ -1,0 +1,6 @@
+{
+    "targetArn": "arn:aws:iot:eu-west-1:699391019698:thinggroup/MyGreengrassCoreGroup",
+    "components": {
+        "com.example.HelloWorldDocker": { "componentVersion": "VERSION" }
+    } 
+}
