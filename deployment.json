@@ -1,5 +1,5 @@
 {
-    "targetArn": "arn:aws:iot:eu-west-1:699391019698:thinggroup/RuuviGatewayGGCore",
+    "targetArn": "arn:aws:iot:eu-west-1:699391019698:thinggroup/RuuviGateways",
     "components": {
         "com.example.HelloWorldDocker": { "componentVersion": "VERSION" }
     } 
