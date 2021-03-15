@@ -26,6 +26,8 @@ Manifests:
     Lifecycle:
       Run: 
         script: |-
-          eval $(aws ecr get-login --no-include-email)
+        
+          registry=$(aws ecr describe-registry --query "registryId" --out text)
+          aws ecr get-login-password | docker login --username AWS --password-stdin $registry.dkr.ecr.$AWS_REGION.amazonaws.com
           docker run --rm IMAGE
       
