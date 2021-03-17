@@ -21,7 +21,8 @@ ComponentConfiguration:
             - "*"
 Manifests:
   - Platform:
-      os: linux    
+      os: linux
+      containerPlatform: docker    
     Lifecycle:
       Run: 
         Script: |-
@@ -44,5 +45,34 @@ Manifests:
                 - /greengrass/v2:/greengrass/v2
           EOF
           docker-compose -f docker-compose.yaml up 
-      Shutdown: docker-compose -f docker-compose.yaml down 
+      Shutdown: docker-compose -f docker-compose.yaml down
+  - Platform:
+      os: linux
+      containerPlatform: k3s    
+    Lifecycle:
+      Run: 
+        Script: |-
+          cat > deployment.yaml <<EOF
+          apiVersion: v1
+          kind: Pod
+          metadata:
+            name: private-reg
+          spec:
+            containers:
+            - name: privateapp
+              image: 699391019698.dkr.ecr.eu-west-1.amazonaws.com/helloworld-sample
+              volumeMounts:
+              - name: gg-root
+                mountPath: /greengrass/v2
+            volumes:
+              - name: gg-root
+                hostPath:
+                  path: /greengrass/v2
+                  type: Directory
+            imagePullSecrets:
+            - name: aws-ecr
+          EOF
+          kubectl apply -f deployment.yaml
+        RequiresPrivilege: true 
+      Shutdown: kubectl delete pod private-reg
       

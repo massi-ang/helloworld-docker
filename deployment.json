@@ -1,13 +1,6 @@
 {
     "targetArn": "arn:aws:iot:eu-west-1:699391019698:thinggroup/RuuviGateways",
     "components": {
-        "com.example.HelloWorldDocker": { "componentVersion": "VERSION" },
-        "aws.greengrass.Nucleus": { 
-            "componentVersion": "2.0.5",
-            "configurationUpdate": {
-                "merge": "{\"platformOverride\": { \"containerPlatform\": \"docker\"}}"
-            }
-        },
-        "aws.greengrass.Cli": {"componentVersion": "2.0.4"}
+        "com.example.HelloWorldDocker": { "componentVersion": "VERSION" }
     } 
 }
