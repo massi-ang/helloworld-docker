@@ -27,7 +27,7 @@ Manifests:
         Script: |-
           registry=$(aws ecr describe-registry --query "registryId" --out text)
           aws ecr get-login-password | docker login --username AWS --password-stdin $registry.dkr.ecr.$AWS_REGION.amazonaws.com
-          cat > docker-compose.yaml <<EOF
+          cat > $HOME/docker-compose.yaml <<EOF
           version: '3'
           services:
             my_hello:
@@ -43,6 +43,6 @@ Manifests:
               volumes:
                 - /greengrass/v2:/greengrass/v2
           EOF
-          docker-compose up 
+          docker-compose -f $HOME/docker-compose.yaml up 
       Shutdown: docker-compose down 
       
