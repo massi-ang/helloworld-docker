@@ -24,8 +24,25 @@ Manifests:
       os: linux    
     Lifecycle:
       Run: 
-        script: |-
+        Script: |-
           registry=$(aws ecr describe-registry --query "registryId" --out text)
           aws ecr get-login-password | docker login --username AWS --password-stdin $registry.dkr.ecr.$AWS_REGION.amazonaws.com
-          docker run --rm IMAGE
+          cat > docker-compose.yaml <<EOF
+          version: '3'
+          services:
+            my_hello:
+              image: IMAGE
+              environment:
+                - AWS_REGION
+                - MESSAGE
+                - TOPIC
+                - AWS_CONTAINER_AUTHORIZATION_TOKEN 
+                - SVCUID
+                - AWS_GG_NUCLEUS_DOMAIN_SOCKET_FILEPATH_FOR_COMPONENT
+                - AWS_GG_NUCLEUS_DOMAIN_SOCKET_FILEPATH
+              volumes:
+                - /greengrass/v2:/greengrass/v2
+          EOF
+          docker-compose up 
+      Shutdown: docker-compose down 
       
