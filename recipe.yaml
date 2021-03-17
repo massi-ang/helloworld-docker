@@ -43,6 +43,6 @@ Manifests:
               volumes:
                 - /greengrass/v2:/greengrass/v2
           EOF
-          docker-compose -f $HOME/docker-compose.yaml up 
-      Shutdown: docker-compose down 
+          docker-compose -f docker-compose.yaml up 
+      Shutdown: docker-compose -f docker-compose.yaml down 
       
